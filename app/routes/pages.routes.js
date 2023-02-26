@@ -1,12 +1,14 @@
-module.exports = app => {
-    const pages = require("../controllers/pages.controller")
+const authMiddleware = require("../firebase/auth-middleware");
 
-    const router = require("express").Router()
+module.exports = (app) => {
+  const pages = require("../controllers/pages.controller");
 
-    router.post('/', pages.create)
-    router.get('/content/:content', pages.getPage)
-    router.get('/', pages.getAll)
-    router.patch('/:id', pages.update)
+  const router = require("express").Router();
 
-    app.use('/api/pages', router)
-}
+  router.post("/", authMiddleware, pages.create);
+  router.get("/content/:content", pages.getPage);
+  router.get("/", authMiddleware, pages.getAll);
+  router.patch("/:id", authMiddleware, pages.update);
+
+  app.use("/api/pages", router);
+};

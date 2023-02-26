@@ -2,7 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 var bodyParser = require('body-parser');
+const admin = require("firebase-admin")
 require("dotenv").config();
+
+
+admin.initializeApp();
 
 const PORT = process.env.PORT;
 

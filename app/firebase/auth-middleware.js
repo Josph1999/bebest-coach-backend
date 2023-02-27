@@ -11,11 +11,15 @@ function authMiddleware(request, response, next) {
   }
 
   const token = headerToken.split(" ")[1];
+  
+
   admin
     .auth()
     .verifyIdToken(token)
     .then(() => next())
-    .catch(() => response.send({ message: "Could not authorize" }).status(403));
+    .catch((err) => {
+      console.log('ERROR:', err)
+      response.send({ message: "Could not authorize" }).status(403)});
 }
 
 module.exports = authMiddleware;

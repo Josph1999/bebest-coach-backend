@@ -6,8 +6,6 @@ const admin = require("firebase-admin")
 require("dotenv").config();
 
 
-admin.initializeApp();
-
 const PORT = process.env.PORT;
 
 const app = express();
@@ -19,7 +17,16 @@ app.listen(PORT, async () => {
   console.log(`server up on port ${PORT}`);
 });
 
+
+
+var serviceAccount = require("./serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
 require("./app/routes/pages.routes")(app);
+require("./app/routes/auth.routes")(app);
 
 mongoose.set("strictQuery", false);
 

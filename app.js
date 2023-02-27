@@ -2,7 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 var bodyParser = require('body-parser');
+const admin = require("firebase-admin")
 require("dotenv").config();
+
 
 const PORT = process.env.PORT;
 
@@ -15,7 +17,16 @@ app.listen(PORT, async () => {
   console.log(`server up on port ${PORT}`);
 });
 
+
+
+var serviceAccount = require("./serviceAccountKey.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
 require("./app/routes/pages.routes")(app);
+require("./app/routes/auth.routes")(app);
 
 mongoose.set("strictQuery", false);
 

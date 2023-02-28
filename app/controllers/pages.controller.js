@@ -32,7 +32,7 @@ exports.create = async (req, res) => {
       description_eng,
     });
 
-    const [findedPage] = Pages.find({content})
+    const [findedPage] = await Pages.find({content})
 
     if(findedPage){
       return res.status(404).send("Page Already Exsists"); 
@@ -42,6 +42,7 @@ exports.create = async (req, res) => {
 
     return res.status(201).send(createdPage);
   } catch (error) {
+    console.log('ERROR:', error)
     return res.status(500).send(error.message || "Error While Creating Page");
   }
 };

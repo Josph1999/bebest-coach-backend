@@ -32,7 +32,7 @@ exports.create = async (req, res) => {
       description_eng,
     });
 
-    const [findedPage] = Pages.find({content})
+    const [findedPage] = await Pages.find({content})
 
     if(findedPage){
       return res.status(404).send("Page Already Exsists"); 
